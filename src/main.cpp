@@ -8,9 +8,6 @@
 
 UltraSonicDistanceSensor sensor(TRIGGER_PIN, ECHO_PIN);
 
-// put function declarations here:
-void blinkLed();
-
 void setup() {
   pinMode(LED_PIN, OUTPUT);
   Serial.begin(115200);
@@ -28,14 +25,13 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  blinkLed();
-  Serial.println("Distance: " + String(sensor.measureDistanceCm()) + " cm");
-}
+  double distance = sensor.measureDistanceCm();
 
-// put function definitions here:
-void blinkLed() {
-  digitalWrite(LED_PIN, HIGH);
-  delay(500);
-  digitalWrite(LED_PIN, LOW);
-  delay(500);
+  if (distance > 0 && distance < 20) {
+    digitalWrite(LED_PIN, HIGH);
+    Serial.println("Wave detected");
+  } else {
+    digitalWrite(LED_PIN, LOW);
+  }
+  delay(100);
 }
